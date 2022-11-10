@@ -10,7 +10,7 @@ module.exports.getUserId = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
-        res.status(201).send({ data: user })
+        res.status(200).send({ data: user })
       } else {
         res.status(404).send({ message: "Пользователь с таким id не найден" });
         return;
