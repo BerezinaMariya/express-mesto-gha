@@ -16,8 +16,10 @@ module.exports.createCard = (req, res) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: "Переданы невалидные данные для создания карточки" });
+        return;
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
+        return;
       }
     });
 };
@@ -26,16 +28,19 @@ module.exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((card) => {
       if (card) {
-        res.status(200).send({ message: "Пост удален" })
+        res.status(200).send({ message: "Пост удален" });
       } else {
         res.status(404).send({ message: "Карточка с таким id не найдена" });
+        return;
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: "Передан невалидный id карточки" });
+        return;
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
+        return;
       }
     });
 };
@@ -53,15 +58,19 @@ module.exports.likeCard = (req, res) => {
         res.status(200).send({ data: card });
       } else {
         res.status(404).send({ message: "Карточка с таким id не найдена" });
+        return;
       }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: "Переданы невалидные данные карточки" });
+        return;
       } else if (err.name === 'CastError') {
         res.status(400).send({ message: "Передан невалидный id карточки" });
+        return;
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
+        return;
       }
     });
 };
@@ -79,15 +88,19 @@ module.exports.dislikeCard = (req, res) => {
         res.status(200).send({ data: card });
       } else {
         res.status(404).send({ message: "Карточка с таким id не найдена" });
+        return;
       }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: "Переданы невалидные данные карточки" });
+        return;
       } else if (err.name === 'CastError') {
         res.status(400).send({ message: "Передан невалидный id карточки" });
+        return;
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
+        return;
       }
     });
 };
