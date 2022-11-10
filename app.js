@@ -12,9 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '636cac89c61fed21d505fb9b'
-  //  _id: 'cac89c61fed21d505fb9b' //невалидный
-  //  _id: '562cac89c61fed21d505fb9b'  //не существует
+    _id: '636cac89c61fed21d505fb9b',
+  //  _id: 'cac89c61fed21d505fb9b', //невалидный
+  //  _id: '562cac89c61fed21d505fb9b',  //не существует
   };
 
   next();

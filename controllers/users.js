@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 module.exports.getUsers = (req, res) => {
   User.find({})
@@ -10,19 +10,16 @@ module.exports.getUserId = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
-        res.status(200).send({ data: user })
+        res.status(200).send({ data: user });
       } else {
-        res.status(404).send({ message: "Пользователь с таким id не найден" });
-        return;
+        res.status(404).send({ message: 'Пользователь с таким id не найден' });
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(400).send({ message: "Передан невалидный id пользователя" });
-        return;
+        res.status(400).send({ message: 'Передан невалидный id пользователя' });
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
-        return;
       }
     });
 };
@@ -34,11 +31,9 @@ module.exports.createUser = (req, res) => {
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: "Переданы невалидные данные для создания пользователя" });
-        return;
+        res.status(400).send({ message: 'Переданы невалидные данные для создания пользователя' });
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
-        return;
       }
     });
 };
@@ -58,23 +53,19 @@ module.exports.updateUserInfo = (req, res) => {
   )
     .then((user) => {
       if (user) {
-        res.send({ data: user })
+        res.send({ data: user });
       } else {
-        res.status(404).send({ message: "Пользователь с таким id не найден" });
-        return;
+        res.status(404).send({ message: 'Пользователь с таким id не найден' });
       }
     })
     .catch((err) => {
       console.log(err);
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: "Переданы невалидные данные для обновления данных пользователя" });
-        return;
+        res.status(400).send({ message: 'Переданы невалидные данные для обновления данных пользователя' });
       } else if (err.name === 'CastError') {
-        res.status(400).send({ message: "Передан невалидный id пользователя" });
-        return;
+        res.status(400).send({ message: 'Передан невалидный id пользователя' });
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
-        return;
       }
     });
 };
@@ -94,22 +85,18 @@ module.exports.updateUserAvatar = (req, res) => {
   )
     .then((user) => {
       if (user) {
-        res.send({ data: user })
+        res.send({ data: user });
       } else {
-        res.status(404).send({ message: "Пользователь с таким id не найден" });
-        return;
+        res.status(404).send({ message: 'Пользователь с таким id не найден' });
       }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: "Переданы невалидные данные для обновления аватара пользователя" });
-        return;
+        res.status(400).send({ message: 'Переданы невалидные данные для обновления аватара пользователя' });
       } else if (err.name === 'CastError') {
-        res.status(400).send({ message: "Передан невалидный id пользователя" });
-        return;
+        res.status(400).send({ message: 'Передан невалидный id пользователя' });
       } else {
         res.status(500).send({ message: `Произошла ошибка ${err.name}: ${err.message}` });
-        return;
       }
     });
 };
