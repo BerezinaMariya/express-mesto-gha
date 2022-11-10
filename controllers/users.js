@@ -53,14 +53,13 @@ module.exports.updateUserInfo = (req, res) => {
   )
     .then((user) => {
       if (user) {
-        console.log(user);
         res.send({ data: user })
       } else {
-        console.log(user);
         res.status(404).send({ message: "Пользователь с таким id не найден" });
       }
     })
     .catch((err) => {
+      console.log(err);
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: "Переданы невалидные данные для обновления данных пользователя" });
       } else if (err.name === 'CastError') {

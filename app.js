@@ -10,6 +10,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res) => {
+  res.status(404);
+  res.status(404).send({ message: "Запрос выполнен по несуществуюущему адресу" });
+});
+
 app.use((req, res, next) => {
   req.user = {
     _id: '636cac89c61fed21d505fb9b'
@@ -29,5 +34,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
+
+
 app.listen(PORT, () => {
+
 });
