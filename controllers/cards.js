@@ -8,18 +8,8 @@ const internalServerError = 500;
 
 module.exports.getCards = (req, res) => {
   Card.find({})
-    .orFail(() => {
-      res.status(notFound);
-      throw Error;
-    })
     .then((cards) => res.status(ok).send({ data: cards }))
-    .catch((err) => {
-      if (res.statusCode === 404) {
-        res.send({ message: 'Запрашиваемые карточки не найдены' });
-      } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
-      }
-    });
+    .catch((err) => res.status(internalServerError).send({ message: `${err.message}` }));
 };
 
 module.exports.createCard = (req, res) => {

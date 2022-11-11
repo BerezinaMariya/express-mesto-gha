@@ -8,18 +8,8 @@ const internalServerError = 500;
 
 module.exports.getUsers = (req, res) => {
   User.find({})
-    .orFail(() => {
-      res.status(notFound);
-      throw Error;
-    })
     .then((users) => res.status(ok).send({ data: users }))
-    .catch((err) => {
-      if (res.statusCode === 404) {
-        res.send({ message: 'Запрашиваемые пользователи не найдены' });
-      } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
-      }
-    });
+    .catch((err) => res.status(internalServerError).send({ message: `${err.message}` }));
 };
 
 module.exports.getUserId = (req, res) => {
