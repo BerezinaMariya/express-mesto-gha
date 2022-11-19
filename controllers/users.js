@@ -1,50 +1,103 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/user');
+
+const NotFoundError = require('../middlewares/errors/not-found-error');
+const BadRequestError = require('../middlewares/errors/bad-request-error');
+const ConflictError = require('../middlewares/errors/conflict-error');
 
 const ok = 200;
 const created = 201;
-const badRequest = 400;
-const notFound = 404;
-const internalServerError = 500;
 
-module.exports.getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.status(ok).send({ data: users }))
-    .catch((err) => res.status(internalServerError).send({ message: `${err.message}` }));
+module.exports.createUser = (req, res, next) => {
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  } = req.body;
+
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
+    .then(() => {
+      res.status(created).send({
+        data: {
+          name,
+          about,
+          avatar,
+          email,
+        },
+      });
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
+      } else {
+        next(err);
+      }
+    });
 };
 
-module.exports.getUserId = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
+  User.find({})
+    .then((users) => res.status(ok).send({ data: users }))
+    .catch(next);
+};
+
+module.exports.getСurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => res.status(ok).send({ data: user }))
+    .catch(next);
+};
+
+module.exports.getUserId = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(() => {
-      res.status(notFound);
-      throw Error;
+      throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
     .then((user) => res.status(ok).send({ data: user }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Передан невалидный id пользователя' });
-      } else if (res.statusCode === 404) {
-        res.send({ message: 'Запрашиваемый пользователь не найден' });
+        next(new BadRequestError('Передан невалидный id пользователя'));
       } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
+        next(err);
       }
     });
 };
 
-module.exports.createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
 
-  User.create({ name, about, avatar })
-    .then((user) => res.status(created).send({ data: user }))
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        'some-secret-key',
+        { expiresIn: '7d' },
+      );
+
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+        sameSite: true,
+      });
+
+      res.send({ token });
+    })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(badRequest).send({ message: 'Переданы невалидные данные для создания пользователя' });
-      } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
-      }
+      next(err);
     });
 };
 
-module.exports.updateUserInfo = (req, res) => {
+module.exports.updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(
@@ -57,24 +110,19 @@ module.exports.updateUserInfo = (req, res) => {
     },
   )
     .orFail(() => {
-      res.status(notFound);
-      throw Error;
+      throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(badRequest).send({ message: 'Переданы невалидные данные для обновления данных пользователя' });
-      } else if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Передан невалидный id пользователя' });
-      } else if (res.statusCode === 404) {
-        res.send({ message: 'Запрашиваемый пользователь не найден' });
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Передан невалидный id пользователя'));
       } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
+        next(err);
       }
     });
 };
 
-module.exports.updateUserAvatar = (req, res) => {
+module.exports.updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(
@@ -87,19 +135,14 @@ module.exports.updateUserAvatar = (req, res) => {
     },
   )
     .orFail(() => {
-      res.status(notFound);
-      throw Error;
+      throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(badRequest).send({ message: 'Переданы невалидные данные для обновления аватара пользователя' });
-      } else if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Передан невалидный id пользователя' });
-      } else if (res.statusCode === 404) {
-        res.send({ message: 'Запрашиваемый пользователь не найден' });
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Передан невалидный id пользователя'));
       } else {
-        res.status(internalServerError).send({ message: `${err.message}` });
+        next(err);
       }
     });
 };
