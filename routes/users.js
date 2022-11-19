@@ -9,32 +9,13 @@ const {
   updateUserAvatar,
 } = require('../controllers/users');
 
-router.get(
-  '/',
-  celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
-  }),
-  getUsers,
-);
+router.get('/', getUsers);
 
-router.get(
-  '/me',
-  celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
-  }),
-  getСurrentUser,
-);
+router.get('/me', getСurrentUser);
 
 router.get(
   '/:userId',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     params: Joi.object({
       userId: Joi.string().required().length(24),
     }).unknown(true),
@@ -45,9 +26,6 @@ router.get(
 router.patch(
   '/me',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     body: Joi.object().keys({
       name: Joi.string().required(),
       about: Joi.string().required(),
@@ -59,9 +37,6 @@ router.patch(
 router.patch(
   '/me/avatar',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     body: Joi.object().keys({
       avatar: Joi.string().required().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
     }).unknown(true),

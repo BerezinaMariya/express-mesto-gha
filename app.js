@@ -24,9 +24,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.post(
   '/signin',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     body: Joi.object().keys({
       email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ru'] } }),
       password: Joi.string().required().min(2),
@@ -38,9 +35,6 @@ app.post(
 app.post(
   '/signup',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     body: Joi.object().keys({
       name: Joi.string().required(),
       about: Joi.string().required(),

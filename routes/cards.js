@@ -9,22 +9,11 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 
-router.get(
-  '/',
-  celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
-  }),
-  getCards,
-);
+router.get('/', getCards);
 
 router.post(
   '/',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     body: Joi.object().keys({
       name: Joi.string().required(),
       link: Joi.string().required().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
@@ -36,9 +25,6 @@ router.post(
 router.delete(
   '/:cardId',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     params: Joi.object({
       cardId: Joi.string().required().length(24),
     }).unknown(true),
@@ -49,9 +35,6 @@ router.delete(
 router.put(
   '/:cardId/likes',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     params: Joi.object({
       cardId: Joi.string().required().length(24),
     }).unknown(true),
@@ -62,9 +45,6 @@ router.put(
 router.delete(
   '/:cardId/likes',
   celebrate({
-    headers: Joi.object({
-      cookie: Joi.string().required().regex(/jwt=[\w.]/),
-    }).unknown(true),
     params: Joi.object({
       cardId: Joi.string().required().length(24),
     }).unknown(true),
