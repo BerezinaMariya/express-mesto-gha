@@ -27,8 +27,8 @@ router.patch(
   '/me',
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required(),
-      about: Joi.string().required(),
+      name: Joi.string().min(2).max(30),
+      about: Joi.string().min(2).max(30),
     }).unknown(true),
   }),
   updateUserInfo,
@@ -38,7 +38,7 @@ router.patch(
   '/me/avatar',
   celebrate({
     body: Joi.object().keys({
-      avatar: Joi.string().required().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
+      avatar: Joi.string().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
     }).unknown(true),
   }),
   updateUserAvatar,
