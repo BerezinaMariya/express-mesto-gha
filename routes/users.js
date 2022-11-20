@@ -8,6 +8,8 @@ const {
   updateUserInfo,
   updateUserAvatar,
 } = require('../controllers/users');
+const { isIdValid } = require('../helpers/isIdValid');
+const { URL_REGEX } = require('../config/config');
 
 router.get('/', getUsers);
 
@@ -17,7 +19,7 @@ router.get(
   '/:userId',
   celebrate({
     params: Joi.object().keys({
-      userId: Joi.string().required().hex().length(24),
+      userId: isIdValid,
     }).unknown(true),
   }),
   getUserId,
@@ -38,7 +40,7 @@ router.patch(
   '/me/avatar',
   celebrate({
     body: Joi.object().keys({
-      avatar: Joi.string().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
+      avatar: Joi.string().regex(URL_REGEX),
     }).unknown(true),
   }),
   updateUserAvatar,

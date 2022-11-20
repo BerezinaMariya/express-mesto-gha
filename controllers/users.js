@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const { SALT_ROUND } = require('../config/config');
 
 const NotFoundError = require('../middlewares/errors/not-found-error');
 const BadRequestError = require('../middlewares/errors/bad-request-error');
@@ -19,7 +20,7 @@ module.exports.createUser = (req, res, next) => {
     password,
   } = req.body;
 
-  bcrypt.hash(password, 10)
+  bcrypt.hash(password, SALT_ROUND)
     .then((hash) => User.create({
       name,
       about,

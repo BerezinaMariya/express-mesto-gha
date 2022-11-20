@@ -8,8 +8,8 @@ const {
   likeCard,
   dislikeCard,
 } = require('../controllers/cards');
-
-const isCardIdValid = Joi.string().required().hex().length(24);
+const { isIdValid } = require('../helpers/isIdValid');
+const { URL_REGEX } = require('../config/config');
 
 router.get('/', getCards);
 
@@ -18,7 +18,7 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/),
+      link: Joi.string().required().regex(URL_REGEX),
     }).unknown(true),
   }),
   createCard,
@@ -28,7 +28,7 @@ router.delete(
   '/:cardId',
   celebrate({
     params: Joi.object({
-      cardId: isCardIdValid,
+      cardId: isIdValid,
     }).unknown(true),
   }),
   deleteCard,
@@ -38,7 +38,7 @@ router.put(
   '/:cardId/likes',
   celebrate({
     params: Joi.object({
-      cardId: isCardIdValid,
+      cardId: isIdValid,
     }).unknown(true),
   }),
   likeCard,
@@ -48,7 +48,7 @@ router.delete(
   '/:cardId/likes',
   celebrate({
     params: Joi.object({
-      cardId: isCardIdValid,
+      cardId: isIdValid,
     }).unknown(true),
   }),
   dislikeCard,
