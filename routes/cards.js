@@ -9,6 +9,8 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 
+const isCardIdValid = Joi.string().required().hex().length(24);
+
 router.get('/', getCards);
 
 router.post(
@@ -26,7 +28,7 @@ router.delete(
   '/:cardId',
   celebrate({
     params: Joi.object({
-      cardId: Joi.string().required().length(24),
+      cardId: isCardIdValid,
     }).unknown(true),
   }),
   deleteCard,
@@ -36,7 +38,7 @@ router.put(
   '/:cardId/likes',
   celebrate({
     params: Joi.object({
-      cardId: Joi.string().required().length(24),
+      cardId: isCardIdValid,
     }).unknown(true),
   }),
   likeCard,
@@ -46,7 +48,7 @@ router.delete(
   '/:cardId/likes',
   celebrate({
     params: Joi.object({
-      cardId: Joi.string().required().length(24),
+      cardId: isCardIdValid,
     }).unknown(true),
   }),
   dislikeCard,

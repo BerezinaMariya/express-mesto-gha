@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator(value) {
+        return /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/gi.test(value);
+      },
+      message: 'Указан невалидный Url изображения',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
