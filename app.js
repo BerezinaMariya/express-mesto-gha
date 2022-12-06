@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 
 const { URL_REGEX } = require('./config/config');
 const { login, createUser } = require('./controllers/users');
-const cors = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./middlewares/errors/not-found-error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -16,6 +16,21 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
+const options = {
+  origin: [
+    'http://localhost:порт',
+    'http://mesto.berezina.nomoredomains.club',
+    'https://mesto.berezina.nomoredomains.club',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
+
+app.use('*', cors(options));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -24,7 +39,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
-app.use(cors);
 app.use(requestLogger);
 
 app.post(
