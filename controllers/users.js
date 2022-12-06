@@ -30,12 +30,10 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then(() => {
       res.status(created).send({
-        data: {
-          name,
-          about,
-          avatar,
-          email,
-        },
+        name,
+        about,
+        avatar,
+        email,
       });
     })
     .catch((err) => {
@@ -49,13 +47,13 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.status(ok).send({ data: users }))
+    .then((users) => res.status(ok).send(users))
     .catch(next);
 };
 
 module.exports.getСurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.status(ok).send({ data: user }))
+    .then((user) => res.status(ok).send(user))
     .catch(next);
 };
 
@@ -64,7 +62,7 @@ module.exports.getUserId = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
-    .then((user) => res.status(ok).send({ data: user }))
+    .then((user) => res.status(ok).send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Передан невалидный id пользователя'));
@@ -113,7 +111,7 @@ module.exports.updateUserInfo = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Передан невалидный id пользователя'));
@@ -138,7 +136,7 @@ module.exports.updateUserAvatar = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Передан невалидный id пользователя'));

@@ -11,7 +11,6 @@ module.exports = ((req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;
   const requestHeaders = req.headers['access-control-request-headers'];
-  console.log(req);
 
   res.header('Access-Control-Allow-Credentials', 'true');
 
