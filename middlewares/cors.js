@@ -4,6 +4,7 @@ const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
   'http://localhost:3000',
+  'https://mesto.berezina.nomoredomains.club',
 ];
 
 module.exports = ((req, res, next) => {
