@@ -18,7 +18,7 @@ const app = express();
 
 const options = {
   origin: [
-    'http://localhost:порт',
+    'http://localhost:3000',
     'http://mesto.berezina.nomoredomains.club',
     'https://mesto.berezina.nomoredomains.club',
   ],
