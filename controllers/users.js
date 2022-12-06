@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const { SALT_ROUND } = require('../config/config');
+const { SALT_ROUND, SECRET_KEY } = require('../config/config');
 
 const NotFoundError = require('../middlewares/errors/not-found-error');
 const BadRequestError = require('../middlewares/errors/bad-request-error');
@@ -81,7 +81,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        SECRET_KEY,
         { expiresIn: '7d' },
       );
 
