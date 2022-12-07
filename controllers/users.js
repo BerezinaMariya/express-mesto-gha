@@ -100,7 +100,7 @@ module.exports.exit = (req, res, next) => {
       throw new NotFoundError('Запрашиваемый пользователь не найден');
     })
     .then(() => {
-      res.clearCookie('jwt').send({ message: 'Вы покинули сайт' });
+      res.send({ message: 'Вы покинули сайт' });
     })
     .catch(next);
 };
