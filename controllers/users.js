@@ -91,9 +91,16 @@ module.exports.login = (req, res, next) => {
 
       res.send({ token });
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
+};
+
+module.exports.exit = (req, res, next) => {
+  User.findById(req.user._id)
+    .then(() => {
+      res.cookie({});
+      res.send('Вы покинули сайт');
+    })
+    .catch(next);
 };
 
 module.exports.updateUserInfo = (req, res, next) => {
