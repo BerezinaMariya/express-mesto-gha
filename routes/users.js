@@ -47,6 +47,6 @@ router.patch(
   updateUserAvatar,
 );
 
-router.exit('/signout', exit);
+router.get('/signout', exit);
 
 module.exports = router;
