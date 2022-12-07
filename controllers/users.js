@@ -98,7 +98,7 @@ module.exports.exit = (req, res, next) => {
   User.findById(req.user._id)
     .then(() => {
       res.cookie({});
-      res.send('Вы покинули сайт');
+      res.status(ok).res.send('Вы покинули сайт');
     })
     .catch(next);
 };
