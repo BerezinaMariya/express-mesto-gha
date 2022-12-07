@@ -89,16 +89,18 @@ module.exports.login = (req, res, next) => {
         sameSite: false,
       });
 
-      res.send({ token });
+      res.status(ok).send({ token });
     })
     .catch(next);
 };
 
 module.exports.exit = (req, res, next) => {
   User.findById(req.user._id)
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемый пользователь не найден');
+    })
     .then(() => {
-      res.cookie({});
-      res.status(ok).res.send('Вы покинули сайт');
+      res.clearCookie('jwt').send({ message: 'Вы покинули сайт' });
     })
     .catch(next);
 };
