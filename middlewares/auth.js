@@ -8,11 +8,13 @@ module.exports = (req, res, next) => {
     throw new UnauthorizedError('Необходима авторизация');
   }
 
+  const { NODE_ENV, JWT_SECRET } = process.env;
+
   const token = req.cookies.jwt;
   let payload;
 
   try {
-    payload = jwt.verify(token, SECRET_KEY);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : SECRET_KEY);
   } catch (err) {
     return next(new UnauthorizedError('Необходима авторизация'));
   }

@@ -74,12 +74,13 @@ module.exports.getUserId = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
+  const { NODE_ENV, JWT_SECRET } = process.env;
 
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        SECRET_KEY,
+        NODE_ENV === 'production' ? JWT_SECRET : SECRET_KEY,
         { expiresIn: '7d' },
       );
 
