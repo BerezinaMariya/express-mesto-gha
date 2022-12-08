@@ -9,7 +9,7 @@ const linkValidationRequirements = Joi.string().required().regex(URL_REGEX);
 module.exports.validateCardData = celebrate({
   body: Joi.object().keys({
     name: nameValidationRequirements,
-    about: linkValidationRequirements,
+    link: linkValidationRequirements,
   }).unknown(true),
 });
 
