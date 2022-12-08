@@ -13,7 +13,7 @@ const { CORS_OPTIONS } = require('./config/config');
 const { handleErrors } = require('./helpers/errors-handler');
 
 // Слушаем 3000 порт
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 app.use(helmet());
