@@ -15,6 +15,6 @@ module.exports.validateCardData = celebrate({
 
 module.exports.validateCardId = celebrate({
   params: Joi.object().keys({
-    userId: isIdValid,
+    cardId: isIdValid,
   }).unknown(true),
 });
