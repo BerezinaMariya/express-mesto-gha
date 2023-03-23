@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
       validator(value) {
         return URL_REGEX_LINK.test(value);
       },
-      message: VALIDATION_MESSAGE,
+      //message: VALIDATION_MESSAGE,
     },
   },
   email: {
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: VALIDATION_MESSAGE,
+      //message: VALIDATION_MESSAGE,
     },
   },
   password: {
