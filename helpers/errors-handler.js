@@ -8,12 +8,12 @@ module.exports.handleErrors = (err, req, res, next) => {
 
   res.status(
     statusCode
-    ? statusCode
-    : INTERNAL_SERVER_ERROR_500
+      ? statusCode
+      : INTERNAL_SERVER_ERROR_500
   ).send({
-    message: statusCode === INTERNAL_SERVER_ERROR_500
-      ? INTERNAL_SERVER_ERROR_MESSAGE
-      : message,
+    message: statusCode
+      ? message
+      : INTERNAL_SERVER_ERROR_MESSAGE
   });
 
   next();
