@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     default: DEFAULT_AVATAR,
     validate: {
       validator(value) {
-        return URL_REGEX_LINK.test(value);
+        return /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/gi.test(value);
       },
       message: VALIDATION_MESSAGE,
     },
