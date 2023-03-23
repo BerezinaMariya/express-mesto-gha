@@ -38,6 +38,7 @@ const DEFAULT_AVATAR = 'https://pictures.s3.yandex.net/resources/jacques-coustea
 // messages
 const PAGE_NOT_FOUND_MESSAGE = 'Страница по указанному маршруту не найдена';
 const NOT_FOUND_ERROR_MESSAGE = 'Запрашиваемые данные не найдены';
+const CONFLICT_ERROR_MESSAGE = 'Пользователь с таким email уже существует';
 const BAD_REQUEST_ERROR_MESSAGE = 'Передан невалидный id';
 const FORBIDDEN_ERROR_MESSAGE = 'Можно удалять только свои карточки';
 const INTERNAL_SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка';
@@ -68,6 +69,7 @@ module.exports = {
   DEFAULT_AVATAR,
   PAGE_NOT_FOUND_MESSAGE,
   NOT_FOUND_ERROR_MESSAGE,
+  CONFLICT_ERROR_MESSAGE,
   BAD_REQUEST_ERROR_MESSAGE,
   FORBIDDEN_ERROR_MESSAGE,
   INTERNAL_SERVER_ERROR_MESSAGE,
