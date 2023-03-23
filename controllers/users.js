@@ -40,7 +40,7 @@ module.exports.createUser = (req, res, next) => {
         name,
         about,
         avatar,
-        // email,
+        email,
       });
     })
     .catch((err) => {
