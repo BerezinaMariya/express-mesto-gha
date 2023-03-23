@@ -9,7 +9,7 @@ const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes/routes');
-const { CORS_OPTIONS } = require('./config/config');
+const { CORS_OPTIONS, MONGO_BASE } = require('./config/config');
 const { handleErrors } = require('./helpers/errors-handler');
 
 // Слушаем 3000 порт
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(MONGO_BASE, {
   useNewUrlParser: true,
 });
 
