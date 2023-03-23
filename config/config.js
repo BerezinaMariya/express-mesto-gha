@@ -12,8 +12,6 @@ const INTERNAL_SERVER_ERROR_500 = http2.constants.HTTP_STATUS_INTERNAL_SERVER_ER
 
 const SALT_ROUND = 10;
 const SECRET_KEY = 'some-secret-key';
-const URL_REGEX = /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/;
-const URL_REGEX_LINK = /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/gi;
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const CORS_OPTIONS = {
@@ -59,8 +57,6 @@ module.exports = {
   INTERNAL_SERVER_ERROR_500,
   SALT_ROUND,
   SECRET_KEY,
-  URL_REGEX,
-  URL_REGEX_LINK,
   DEFAULT_ALLOWED_METHODS,
   CORS_OPTIONS,
   MONGO_BASE,

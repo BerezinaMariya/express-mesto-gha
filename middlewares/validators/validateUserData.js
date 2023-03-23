@@ -1,10 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
 
-const { URL_REGEX } = require('../../config/config');
 const { isIdValid } = require('../../helpers/isIdValid');
 
 const nameAndAboutValidationRequirements = Joi.string().min(2).max(30);
-const avatarValidationRequirements = Joi.string().regex(URL_REGEX);
+const avatarValidationRequirements = Joi.string().regex(/^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/gi);
 const emailValidationRequirements = Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ru'] } });
 const passwordValidationRequirements = Joi.string().required();
 

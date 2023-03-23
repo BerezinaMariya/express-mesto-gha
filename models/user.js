@@ -6,7 +6,6 @@ const BadRequestError = require('../middlewares/errors/bad-request-error');
 const UnauthorizedError = require('../middlewares/errors/unauthorized-error');
 
 const {
-  URL_REGEX_LINK,
   DEFAULT_NAME,
   DEFAULT_ABOUT,
   DEFAULT_AVATAR,
