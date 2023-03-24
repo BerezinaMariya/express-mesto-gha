@@ -2,7 +2,6 @@ const http2 = require('node:http2');
 
 const OK_200 = http2.constants.HTTP_STATUS_OK;
 const CREATED_201 = http2.constants.HTTP_STATUS_CREATED;
-const NO_CONTENT_204 = http2.constants.HTTP_STATUS_NO_CONTENT;
 const BAD_REQUEST_400 = http2.constants.HTTP_STATUS_BAD_REQUEST;
 const UNAUTHORIZED_401 = http2.constants.HTTP_STATUS_UNAUTHORIZED;
 const FORBIDDEN_403 = http2.constants.HTTP_STATUS_FORBIDDEN;
@@ -12,7 +11,6 @@ const INTERNAL_SERVER_ERROR_500 = http2.constants.HTTP_STATUS_INTERNAL_SERVER_ER
 
 const SALT_ROUND = 10;
 const SECRET_KEY = 'some-secret-key';
-const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const CORS_OPTIONS = {
   origin: [
@@ -22,7 +20,7 @@ const CORS_OPTIONS = {
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
-  optionsSuccessStatus: NO_CONTENT_204,
+  optionsSuccessStatus: 204,
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
@@ -57,7 +55,6 @@ module.exports = {
   INTERNAL_SERVER_ERROR_500,
   SALT_ROUND,
   SECRET_KEY,
-  DEFAULT_ALLOWED_METHODS,
   CORS_OPTIONS,
   MONGO_BASE,
   DEFAULT_NAME,
