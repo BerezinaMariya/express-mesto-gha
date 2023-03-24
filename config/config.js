@@ -2,6 +2,7 @@ const http2 = require('node:http2');
 
 const OK_200 = http2.constants.HTTP_STATUS_OK;
 const CREATED_201 = http2.constants.HTTP_STATUS_CREATED;
+const NO_CONTENT_204 = http2.constants.HTTP_STATUS_NO_CONTENT;
 const BAD_REQUEST_400 = http2.constants.HTTP_STATUS_BAD_REQUEST;
 const UNAUTHORIZED_401 = http2.constants.HTTP_STATUS_UNAUTHORIZED;
 const FORBIDDEN_403 = http2.constants.HTTP_STATUS_FORBIDDEN;
@@ -20,7 +21,7 @@ const CORS_OPTIONS = {
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: NO_CONTENT_204,
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
