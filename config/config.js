@@ -13,6 +13,8 @@ const INTERNAL_SERVER_ERROR_500 = http2.constants.HTTP_STATUS_INTERNAL_SERVER_ER
 const SALT_ROUND = 10;
 const SECRET_KEY = 'some-secret-key';
 
+const URL_REGEX = /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/i;
+
 const CORS_OPTIONS = {
   origin: [
     'http://localhost:3000',
@@ -21,7 +23,7 @@ const CORS_OPTIONS = {
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: NO_CONTENT_204,
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
@@ -56,6 +58,7 @@ module.exports = {
   INTERNAL_SERVER_ERROR_500,
   SALT_ROUND,
   SECRET_KEY,
+  URL_REGEX,
   CORS_OPTIONS,
   MONGO_BASE,
   DEFAULT_NAME,

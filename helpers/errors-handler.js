@@ -4,16 +4,12 @@ const {
 } = require('../config/config');
 
 module.exports.handleErrors = (err, req, res, next) => {
-  const { statusCode, message } = err;
+  const { statusCode = INTERNAL_SERVER_ERROR_500, message } = err;
 
-  res.status(
-    statusCode
-      ? statusCode
-      : INTERNAL_SERVER_ERROR_500
-  ).send({
+  res.status(statusCode).send({
     message: statusCode
       ? message
-      : INTERNAL_SERVER_ERROR_MESSAGE
+      : INTERNAL_SERVER_ERROR_MESSAGE,
   });
 
   next();

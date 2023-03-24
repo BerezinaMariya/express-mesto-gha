@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+mongoose.connect(MONGO_BASE, {
   useNewUrlParser: true,
 });
 
@@ -33,6 +33,6 @@ app.use('/', routes);
 app.use(errorLogger);
 
 app.use(errors());
-//app.use(handleErrors);
+app.use(handleErrors);
 
 app.listen(PORT);

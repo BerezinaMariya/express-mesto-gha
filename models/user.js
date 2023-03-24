@@ -6,6 +6,7 @@ const BadRequestError = require('../middlewares/errors/bad-request-error');
 const UnauthorizedError = require('../middlewares/errors/unauthorized-error');
 
 const {
+  URL_REGEX,
   DEFAULT_NAME,
   DEFAULT_ABOUT,
   DEFAULT_AVATAR,
@@ -31,7 +32,7 @@ const userSchema = new mongoose.Schema({
     default: DEFAULT_AVATAR,
     validate: {
       validator(value) {
-        return /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/gi.test(value);
+        return URL_REGEX.test(value);
       },
       message: VALIDATION_MESSAGE,
     },
