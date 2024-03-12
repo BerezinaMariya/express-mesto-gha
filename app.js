@@ -12,8 +12,8 @@ const routes = require('./routes/routes');
 const { CORS_OPTIONS, MONGO_BASE } = require('./config/config');
 const { handleErrors } = require('./helpers/errors-handler');
 
-// Слушаем 3000 порт
-const { PORT = 3000 } = process.env;
+// Слушаем 3001 порт
+const { PORT = 3001 } = process.env;
 
 const app = express();
 app.use(helmet());

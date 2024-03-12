@@ -17,9 +17,11 @@ const URL_REGEX = /^(http|https):\/\/[w{3}.]?[\w-._~:/?#[\]@!$&'()*+,;=]#?/i;
 
 const CORS_OPTIONS = {
   origin: [
-    'http://localhost:3000',
+    'http://localhost:3001',
     'http://mesto.berezina.nomoredomains.club',
     'https://mesto.berezina.nomoredomains.club',
+    'http://mesto.training-project.ru',
+    'https://mesto.training-project.ru',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
